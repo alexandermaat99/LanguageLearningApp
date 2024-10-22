@@ -97,6 +97,8 @@ struct QuizView_Previews: PreviewProvider {
     static var previews: some View {
         let sampleQuiz = Quiz(questions: [
             QuizQuestion(question: "What is the capital of Spain?", correctAnswer: "Madrid", options: ["Madrid", "Barcelona", "Seville"]),
+            QuizQuestion(question: "How do you say 'apple' in Spanish?", correctAnswer: "manzana", options: ["manzana", "pera", "naranja"]),
+            QuizQuestion(question: "How do you say 'apple' in Spanish?", correctAnswer: "manzana", options: ["manzana", "pera", "naranja"]),
             QuizQuestion(question: "How do you say 'apple' in Spanish?", correctAnswer: "manzana", options: ["manzana", "pera", "naranja"])
         ])
         QuizView(viewModel: QuizViewModel(quiz: sampleQuiz))

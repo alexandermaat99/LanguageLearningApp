@@ -1,10 +1,3 @@
-//
-//  QuizViewModel.swift
-//  LanguageLearningApp
-//
-//  Created by Alexander Maat on 10/22/24.
-//
-
 import SwiftUI
 
 class QuizViewModel: ObservableObject {
@@ -37,25 +30,32 @@ class QuizViewModel: ObservableObject {
     func submitAnswer(_ answer: String) {
         stopTimer()
 
+        // Check if the submitted answer is correct
         if quiz.questions[currentIndex].correctAnswer == answer {
             isCorrect = true
-            currentScore += 10  // Base points
-            let bonus = max(0, Int((20 - elapsedTime) / 2))  // Time-based bonus
+            currentScore += 10  // Base points for a correct answer
+            let bonus = max(0, Int((20 - elapsedTime) / 2))  // Time-based bonus points
             currentScore += bonus
         } else {
             isCorrect = false
         }
 
         showAnswerFeedback = true
+
+        // Automatically move to the next question after showing feedback
+        nextQuestion()
     }
 
     func nextQuestion() {
         showAnswerFeedback = false
+        
+        // Move to the next question if there are more questions remaining
         if currentIndex + 1 < quiz.questions.count {
             currentIndex += 1
             startTimer()  // Reset timer for the next question
         } else {
-            quizCompleted = true  // Quiz is finished
+            quizCompleted = true  // Mark quiz as completed if no more questions are left
+            stopTimer()  // Ensure timer stops when quiz is completed
         }
     }
 
