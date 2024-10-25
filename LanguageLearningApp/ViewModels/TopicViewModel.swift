@@ -25,11 +25,18 @@ class TopicViewModel: ObservableObject {
                     Flashcard(word: "Hello", translation: "Hola"),
                     Flashcard(word: "Goodbye", translation: "Adiós"),
                     Flashcard(word: "Good morning", translation: "Buenos días"),
-                    Flashcard(word: "Good night", translation: "Buenas noches")
+                    Flashcard(word: "Good night", translation: "Buenas noches"),
+                    Flashcard(word: "Thank you", translation: "Gracias"),
+                    Flashcard(word: "Excuse me", translation: "Siento molestar")
                 ],
                 quiz: Quiz(questions: [
                     QuizQuestion(question: "How do you say 'Hello' in Spanish?", correctAnswer: "Hola", options: ["Hola", "Adiós", "Gracias"]),
-                    QuizQuestion(question: "How do you say 'Goodbye' in Spanish?", correctAnswer: "Adiós", options: ["Hola", "Adiós", "Gracias"])
+                    QuizQuestion(question: "How do you say 'Goodbye' in Spanish?", correctAnswer: "Adiós", options: ["Hola", "Adiós", "Gracias"]),
+                    QuizQuestion(question: "How do you say 'Good morning' in Spanish?", correctAnswer: "Buenos días", options: ["Buenos días", "Buenas noches", "Gracias"]),
+                    QuizQuestion(question: "How do you say 'Good night' in Spanish?", correctAnswer: "Buenas noches", options: ["Buenos días", "Buenas noches", "Gracias"]),
+                    QuizQuestion(question: "How do you say 'Thank you' in Spanish?", correctAnswer: "Gracias", options: ["Hola", "Adiós", "Gracias"]),
+                    QuizQuestion(question: "How do you say 'Excuse me' in Spanish?", correctAnswer: "Siento molestar", options: ["Hola", "Adiós", "Siento molestar"])
+
                 ])
             ),
             Topic(
@@ -51,7 +58,18 @@ class TopicViewModel: ObservableObject {
                 ],
                 quiz: Quiz(questions: [
                     QuizQuestion(question: "How do you say 'Two' in Spanish?", correctAnswer: "Dos", options: ["Uno", "Dos", "Tres"]),
-                    QuizQuestion(question: "How do you say 'Three' in Spanish?", correctAnswer: "Tres", options: ["Uno", "Dos", "Tres"])
+                    QuizQuestion(question: "How do you say 'Three' in Spanish?", correctAnswer: "Tres", options: ["Dos", "Tres", "Cuatro"]),
+                    QuizQuestion(question: "How do you say 'Four' in Spanish?", correctAnswer: "Cuatro", options: ["Tres", "Cuatro", "Cinco"]),
+                    QuizQuestion(question: "How do you say 'Five' in Spanish?", correctAnswer: "Cinco", options: ["Cuatro", "Cinco", "Seis"]),
+                    QuizQuestion(question: "How do you say 'Six' in Spanish?", correctAnswer: "Seis", options: ["Cinco", "Seis", "Siete"]),
+                    QuizQuestion(question: "How do you say 'Seven' in Spanish?", correctAnswer: "Siete", options: ["Seis", "Siete", "Ocho"]),
+                    QuizQuestion(question: "How do you say 'Eight' in Spanish?", correctAnswer: "Ocho", options: ["Siete", "Ocho", "Nueve"]),
+                    QuizQuestion(question: "How do you say 'Nine' in Spanish?", correctAnswer: "Nueve", options: ["Ocho", "Nueve", "Diez"]),
+                    QuizQuestion(question: "How do you say 'Ten' in Spanish?", correctAnswer: "Diez", options: ["Nueve", "Diez", "Once"])
+
+
+
+
                 ])
             ),
             Topic(
