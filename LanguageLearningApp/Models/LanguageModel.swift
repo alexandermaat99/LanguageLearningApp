@@ -21,6 +21,7 @@ struct Topic: Identifiable {
     var isLessonRead: Bool = false
     var isFlashcardsCompleted: Bool = false
     var isQuizCompleted: Bool = false
+    var highScore: Int = 0
 
     mutating func markFlashcardsComplete() {
         isFlashcardsCompleted = true
@@ -39,7 +40,6 @@ struct Topic: Identifiable {
     }
 }
 
-
 struct Quiz {
     var questions: [QuizQuestion]
 }
@@ -49,4 +49,3 @@ struct QuizQuestion {
     var correctAnswer: String
     var options: [String]
 }
-

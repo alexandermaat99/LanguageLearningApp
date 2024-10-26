@@ -2,18 +2,17 @@
 //  QuizView.swift
 //  LanguageLearningApp
 //
-//  Created by Alexander Maat on 10/22/24.
+//  Created by Alexander Maat on 10/25/24.
 //
-import SwiftUI
 
 import SwiftUI
 
 struct QuizView: View {
     @ObservedObject var viewModel: QuizViewModel
     @EnvironmentObject var topicViewModel: TopicViewModel
-    @Environment(\.dismiss) var dismiss // Add dismiss environment variable
-    var topic: Topic
-    
+    @Environment(\.dismiss) var dismiss
+    var topicID: UUID
+
     var body: some View {
         VStack {
             if viewModel.quizCompleted {
@@ -31,7 +30,7 @@ struct QuizView: View {
                 // Button to retake the quiz
                 Button(action: {
                     viewModel.resetQuiz()
-                    topicViewModel.unmarkQuizComplete(for: topic) // Unmark quiz complete if retaking
+                    topicViewModel.unmarkQuizComplete(for: topicID) // Unmark quiz complete if retaking
                 }) {
                     Text("Take Quiz Again")
                         .font(.title)
@@ -44,7 +43,7 @@ struct QuizView: View {
                 // Conditionally show "Mark Quiz as Complete" if all answers are correct
                 if viewModel.correctCounter == viewModel.quiz.questions.count {
                     Button(action: {
-                        topicViewModel.markQuizComplete(for: topic)
+                        topicViewModel.markQuizComplete(for: topicID)
                         dismiss() // Dismiss the QuizView to go back to LessonView
                     }) {
                         Text("Mark Quiz as Complete")
@@ -68,7 +67,6 @@ struct QuizView: View {
                         .transition(.opacity)
                         .padding()
                 } else {
-                    // Placeholder with the same height as the feedback text
                     Text(" ")
                         .font(.headline)
                         .padding()
@@ -126,19 +124,21 @@ struct QuizView_Previews: PreviewProvider {
         let sampleQuiz = Quiz(questions: [
             QuizQuestion(question: "What is the capital of Spain?", correctAnswer: "Madrid", options: ["Madrid", "Barcelona", "Seville"]),
             QuizQuestion(question: "How do you say 'apple' in Spanish?", correctAnswer: "manzana", options: ["manzana", "pera", "naranja"]),
-            QuizQuestion(question: "How do you say 'apple' in Spanish?", correctAnswer: "manzana", options: ["manzana", "pera", "naranja"]),
-            QuizQuestion(question: "How do you say 'apple' in Spanish?", correctAnswer: "manzana", options: ["manzana", "pera", "naranja"])
+            QuizQuestion(question: "How do you say 'car' in Spanish?", correctAnswer: "coche", options: ["coche", "bici", "barco"]),
+            QuizQuestion(question: "What is the color of the sky?", correctAnswer: "blue", options: ["red", "blue", "green"])
         ])
         
-        QuizView(viewModel: QuizViewModel(quiz: sampleQuiz), topic: Topic(
-            name: "Sample",
-            lesson: "Sample Lesson",
+        let sampleTopic = Topic(
+            name: "Sample Topic",
+            lesson: "This is a sample lesson for Spanish basics.",
             flashcards: [
                 Flashcard(word: "Hello", translation: "Hola"),
                 Flashcard(word: "Goodbye", translation: "Adiós")
             ],
             quiz: sampleQuiz
-        ))
-        .environmentObject(TopicViewModel()) // Ensure the environment object is provided
+        )
+        
+        return QuizView(viewModel: QuizViewModel(quiz: sampleQuiz), topicID: sampleTopic.id)
+            .environmentObject(TopicViewModel())
     }
 }

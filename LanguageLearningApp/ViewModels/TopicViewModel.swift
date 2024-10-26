@@ -13,7 +13,7 @@ class TopicViewModel: ObservableObject {
     init() {
         loadTopics()  // Load topics when the ViewModel is initialized
     }
-
+    
     func loadTopics() {
         let sampleTopics = [
             Topic(
@@ -36,7 +36,7 @@ class TopicViewModel: ObservableObject {
                     QuizQuestion(question: "How do you say 'Good night' in Spanish?", correctAnswer: "Buenas noches", options: ["Buenos días", "Buenas noches", "Gracias"]),
                     QuizQuestion(question: "How do you say 'Thank you' in Spanish?", correctAnswer: "Gracias", options: ["Hola", "Adiós", "Gracias"]),
                     QuizQuestion(question: "How do you say 'Excuse me' in Spanish?", correctAnswer: "Siento molestar", options: ["Hola", "Adiós", "Siento molestar"])
-
+                    
                 ])
             ),
             Topic(
@@ -66,10 +66,10 @@ class TopicViewModel: ObservableObject {
                     QuizQuestion(question: "How do you say 'Eight' in Spanish?", correctAnswer: "Ocho", options: ["Siete", "Ocho", "Nueve"]),
                     QuizQuestion(question: "How do you say 'Nine' in Spanish?", correctAnswer: "Nueve", options: ["Ocho", "Nueve", "Diez"]),
                     QuizQuestion(question: "How do you say 'Ten' in Spanish?", correctAnswer: "Diez", options: ["Nueve", "Diez", "Once"])
-
-
-
-
+                    
+                    
+                    
+                    
                 ])
             ),
             Topic(
@@ -129,27 +129,39 @@ class TopicViewModel: ObservableObject {
         
         topics = sampleTopics
     }
-    func markFlashcardsComplete(for topic: Topic) {
-            if let index = topics.firstIndex(where: { $0.id == topic.id }) {
-                topics[index].markFlashcardsComplete()
-            }
+    // Fetch a topic by ID - helps avoid direct binding manipulation
+    func fetchTopic(by id: UUID) -> Topic? {
+        return topics.first(where: { $0.id == id })
+    }
+    
+    // Update methods with topicID instead of direct topic binding
+    func markFlashcardsComplete(for topicID: UUID) {
+        if let index = topics.firstIndex(where: { $0.id == topicID }) {
+            topics[index].markFlashcardsComplete()
         }
-        
-        func unmarkFlashcardsComplete(for topic: Topic) {
-            if let index = topics.firstIndex(where: { $0.id == topic.id }) {
-                topics[index].unmarkFlashcardsComplete()
-            }
+    }
+    
+    func unmarkFlashcardsComplete(for topicID: UUID) {
+        if let index = topics.firstIndex(where: { $0.id == topicID }) {
+            topics[index].unmarkFlashcardsComplete()
         }
-        
-        func markQuizComplete(for topic: Topic) {
-            if let index = topics.firstIndex(where: { $0.id == topic.id }) {
-                topics[index].markQuizComplete()
-            }
+    }
+    
+    func markQuizComplete(for topicID: UUID) {
+        if let index = topics.firstIndex(where: { $0.id == topicID }) {
+            topics[index].markQuizComplete()
         }
-        
-        func unmarkQuizComplete(for topic: Topic) {
-            if let index = topics.firstIndex(where: { $0.id == topic.id }) {
-                topics[index].unmarkQuizComplete()
-            }
+    }
+    
+    func unmarkQuizComplete(for topicID: UUID) {
+        if let index = topics.firstIndex(where: { $0.id == topicID }) {
+            topics[index].isQuizCompleted = false
         }
+    }
+    
+    func updateHighScore(for topicID: UUID, newScore: Int) {
+        if let index = topics.firstIndex(where: { $0.id == topicID }) {
+            topics[index].highScore = max(topics[index].highScore, newScore)
+        }
+    }
 }
