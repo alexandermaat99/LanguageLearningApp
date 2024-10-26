@@ -44,11 +44,13 @@ class QuizViewModel: ObservableObject {
     }
     
     // MARK: Answering Functionality
-    
+
     func submitAnswer(_ answer: String) {
+        guard !quizCompleted else { return }
+
         selectedAnswer = answer
-        stopTimer()  // Stop the timer when an answer is submitted
-        
+        stopTimer()
+
         if quiz.questions[currentIndex].correctAnswer == answer {
             isCorrect = true
             correctCounter += 1
@@ -63,36 +65,43 @@ class QuizViewModel: ObservableObject {
             incorrectCounter += 1
             Task { await soundPlayer.playSound(named: "Click2.m4a") }
         }
-        
+
         withAnimation { showAnswerFeedback = true }
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-            self.nextQuestion()
+            self.showAnswerFeedback = false
+            self.selectedAnswer = nil
+            self.isCorrect = false
             self.addedScore = 0
+
+            // Check if this was the last question
+            if self.currentIndex == self.quiz.questions.count - 1 {
+                self.quizCompleted = true
+//                if let updateHighScore = self.updateHighScore, self.currentScore > 0 {
+//                    updateHighScore(self.currentScore)
+//                }
+            } else {
+                self.currentIndex += 1
+                self.startTimer()
+            }
         }
     }
+
     
     // MARK: Question Advance Functionality
-    
+
     func nextQuestion() {
         showAnswerFeedback = false
         selectedAnswer = nil
         isCorrect = false
 
-        if currentIndex + 1 < quiz.questions.count {
-            currentIndex += 1
-            startTimer()
-        } else if !quizCompleted {
-            quizCompleted = true
-            stopTimer()
-
-            // Update high score if currentScore is greater
-            if let updateHighScore = updateHighScore, currentScore > 0 {
-                updateHighScore(currentScore)
-            }
-        }
+        currentIndex += 1
+        startTimer()
     }
-    
+
+
+
+
     // MARK: Reset Quiz Functionality
     
     func resetQuiz() {

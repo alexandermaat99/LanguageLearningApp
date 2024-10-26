@@ -27,6 +27,13 @@ struct QuizView: View {
                 Text("Final Score: \(viewModel.currentScore)")
                     .font(.title)
                 
+                // Use onAppear to check and update high score
+                .onAppear {
+                    if viewModel.currentScore > topicViewModel.fetchTopic(by: topicID)?.highScore ?? 0 {
+                        topicViewModel.updateHighScore(for: topicID, newScore: viewModel.currentScore)
+                    }
+                }
+                
                 // Button to retake the quiz
                 Button(action: {
                     viewModel.resetQuiz()
@@ -119,26 +126,4 @@ struct QuizView: View {
 }
 
 
-struct QuizView_Previews: PreviewProvider {
-    static var previews: some View {
-        let sampleQuiz = Quiz(questions: [
-            QuizQuestion(question: "What is the capital of Spain?", correctAnswer: "Madrid", options: ["Madrid", "Barcelona", "Seville"]),
-            QuizQuestion(question: "How do you say 'apple' in Spanish?", correctAnswer: "manzana", options: ["manzana", "pera", "naranja"]),
-            QuizQuestion(question: "How do you say 'car' in Spanish?", correctAnswer: "coche", options: ["coche", "bici", "barco"]),
-            QuizQuestion(question: "What is the color of the sky?", correctAnswer: "blue", options: ["red", "blue", "green"])
-        ])
-        
-        let sampleTopic = Topic(
-            name: "Sample Topic",
-            lesson: "This is a sample lesson for Spanish basics.",
-            flashcards: [
-                Flashcard(word: "Hello", translation: "Hola"),
-                Flashcard(word: "Goodbye", translation: "Adiós")
-            ],
-            quiz: sampleQuiz
-        )
-        
-        return QuizView(viewModel: QuizViewModel(quiz: sampleQuiz), topicID: sampleTopic.id)
-            .environmentObject(TopicViewModel())
-    }
-}
+
