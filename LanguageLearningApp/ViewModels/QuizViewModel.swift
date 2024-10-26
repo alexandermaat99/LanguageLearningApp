@@ -1,3 +1,10 @@
+//
+//  QuizViewModel.swift
+//  LanguageLearningApp
+//
+//  Created by Alexander Maat on 10/22/24.
+//
+
 import SwiftUI
 
 class QuizViewModel: ObservableObject {

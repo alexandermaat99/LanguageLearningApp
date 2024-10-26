@@ -8,10 +8,11 @@
 import SwiftUI
 
 @main
-struct LanguageLearningAppApp: App {
+struct LanguageLearningApp: App {
     var body: some Scene {
         WindowGroup {
             TopicListView()
+                .environmentObject(TopicViewModel()) // Inject environment object
         }
     }
 }

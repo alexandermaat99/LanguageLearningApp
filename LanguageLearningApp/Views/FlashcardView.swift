@@ -11,6 +11,8 @@ import SwiftUI
 struct FlashcardView: View {
     //brings in the FlashcardViewModel as viewModel, this has the function to mess with cards as well as the flashcards array
     @ObservedObject var viewModel: FlashcardViewModel
+    @EnvironmentObject var topicViewModel: TopicViewModel
+    var topic: Topic
 
     var body: some View {
         VStack {
@@ -85,6 +87,21 @@ struct FlashcardView: View {
                 }
             }
             .padding()
+            Button(action: {
+                if topic.isFlashcardsCompleted {
+                    topicViewModel.unmarkFlashcardsComplete(for: topic)
+                } else {
+                    topicViewModel.markFlashcardsComplete(for: topic)
+                }
+            }) {
+                Text(topic.isFlashcardsCompleted ? "Unmark Flashcards as Complete" : "Mark Flashcards as Complete")
+                    .font(.title2)
+                    .padding()
+                    .background(Color.purple)
+                    .foregroundColor(.white)
+                    .cornerRadius(8)
+            }
+            
         }
         .padding()
         .navigationTitle("Flashcards")
@@ -93,9 +110,21 @@ struct FlashcardView: View {
 
 struct FlashcardView_Previews: PreviewProvider {
     static var previews: some View {
-        FlashcardView(viewModel: FlashcardViewModel(flashcards: [
-            Flashcard(word: "Hello", translation: "Hola"),
-            Flashcard(word: "Goodbye", translation: "Adiós")
-        ]))
+        let topic = Topic(
+            name: "Sample Topic",
+            lesson: "Sample Lesson",
+            flashcards: [
+                Flashcard(word: "Hello", translation: "Hola"),
+                Flashcard(word: "Goodbye", translation: "Adiós")
+            ],
+            quiz: Quiz(questions: [])
+        )
+        
+        FlashcardView(
+            viewModel: FlashcardViewModel(flashcards: topic.flashcards),
+            topic: topic
+        )
+        .environmentObject(TopicViewModel()) // Provide TopicViewModel for EnvironmentObject
     }
 }
+

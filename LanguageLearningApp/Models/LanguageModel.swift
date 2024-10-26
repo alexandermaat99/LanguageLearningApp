@@ -21,6 +21,22 @@ struct Topic: Identifiable {
     var isLessonRead: Bool = false
     var isFlashcardsCompleted: Bool = false
     var isQuizCompleted: Bool = false
+
+    mutating func markFlashcardsComplete() {
+        isFlashcardsCompleted = true
+    }
+    
+    mutating func unmarkFlashcardsComplete() {
+        isFlashcardsCompleted = false
+    }
+    
+    mutating func markQuizComplete() {
+        isQuizCompleted = true
+    }
+    
+    mutating func unmarkQuizComplete() {
+        isQuizCompleted = false
+    }
 }
 
 

@@ -8,20 +8,22 @@
 import SwiftUI
 
 struct TopicListView: View {
-    @StateObject var viewModel = TopicViewModel()
+    @EnvironmentObject var viewModel: TopicViewModel // Use @EnvironmentObject to access the shared instance
 
     var body: some View {
         NavigationStack {
             List(viewModel.topics) { topic in
                 NavigationLink(destination: LessonView(topic: topic)) {
-                    Text(topic.name)
-                        .font(.headline)
+                    HStack {
+                        Text(topic.name)
+                            .font(.headline)
+                        if topic.isFlashcardsCompleted && topic.isQuizCompleted {
+                            Text("✓").foregroundColor(.green) // Show check if both are complete
+                        }
+                    }
                 }
             }
             .navigationTitle("Language Topics")
-            .onAppear {
-                viewModel.loadTopics()
-            }
         }
     }
 }
@@ -29,10 +31,9 @@ struct TopicListView: View {
 struct TopicListView_Previews: PreviewProvider {
     static var previews: some View {
         TopicListView()
+            .environmentObject(TopicViewModel()) // Inject for preview
     }
 }
-
-
 #Preview {
     TopicListView()
 }

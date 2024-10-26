@@ -13,7 +13,7 @@ class TopicViewModel: ObservableObject {
     init() {
         loadTopics()  // Load topics when the ViewModel is initialized
     }
-    
+
     func loadTopics() {
         let sampleTopics = [
             Topic(
@@ -129,4 +129,27 @@ class TopicViewModel: ObservableObject {
         
         topics = sampleTopics
     }
+    func markFlashcardsComplete(for topic: Topic) {
+            if let index = topics.firstIndex(where: { $0.id == topic.id }) {
+                topics[index].markFlashcardsComplete()
+            }
+        }
+        
+        func unmarkFlashcardsComplete(for topic: Topic) {
+            if let index = topics.firstIndex(where: { $0.id == topic.id }) {
+                topics[index].unmarkFlashcardsComplete()
+            }
+        }
+        
+        func markQuizComplete(for topic: Topic) {
+            if let index = topics.firstIndex(where: { $0.id == topic.id }) {
+                topics[index].markQuizComplete()
+            }
+        }
+        
+        func unmarkQuizComplete(for topic: Topic) {
+            if let index = topics.firstIndex(where: { $0.id == topic.id }) {
+                topics[index].unmarkQuizComplete()
+            }
+        }
 }

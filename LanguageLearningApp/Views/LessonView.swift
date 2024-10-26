@@ -9,6 +9,7 @@
 import SwiftUI
 
 struct LessonView: View {
+    @EnvironmentObject var topicViewModel: TopicViewModel
     var topic: Topic
     
 
@@ -25,8 +26,16 @@ struct LessonView: View {
                 VocabularyView(vocabList: topic.flashcards.map { ($0.word, $0.translation)})
                 
                     .padding()
-
-                NavigationLink(destination: FlashcardView(viewModel: FlashcardViewModel(flashcards: topic.flashcards))) {
+                
+                Text(topic.isFlashcardsCompleted ? "Flashcards: Complete" : "Flashcards: Incomplete")
+                    .font(.headline)
+                    .padding(.top, 10)
+                
+                Text(topic.isQuizCompleted ? "Quiz: Complete" : "Quiz: Incomplete")
+                    .font(.headline)
+                    .padding(.top, 5)
+                
+                NavigationLink(destination: FlashcardView(viewModel: FlashcardViewModel(flashcards: topic.flashcards), topic: topic)) {
                     Text("Study Flashcards")
                         .font(.title2)
                         .padding()
@@ -37,7 +46,7 @@ struct LessonView: View {
 
                 Spacer()
                 
-                NavigationLink(destination: QuizView(viewModel: QuizViewModel(quiz: topic.quiz))) {
+                NavigationLink(destination: QuizView(viewModel: QuizViewModel(quiz: topic.quiz), topic: topic)) {
                     Text("Quiz Yourself")
                         .font(.title2)
                         .padding()
@@ -45,6 +54,7 @@ struct LessonView: View {
                         .foregroundColor(.white)
                         .cornerRadius(8)
                 }
+
 
                 Spacer()
 
