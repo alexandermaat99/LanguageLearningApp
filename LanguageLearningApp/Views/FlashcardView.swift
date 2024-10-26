@@ -11,7 +11,7 @@ struct FlashcardView: View {
     @ObservedObject var viewModel: FlashcardViewModel
     @EnvironmentObject var topicViewModel: TopicViewModel
     var topicID: UUID  // Use topicID instead of the entire Topic object
-
+    
     var body: some View {
         VStack {
             Spacer()
@@ -45,9 +45,9 @@ struct FlashcardView: View {
                 }
             }
             .animation(.easeInOut, value: viewModel.showTranslation)
-
+            
             Spacer()
-
+            
             // Navigation Buttons for flashcards
             HStack {
                 Button(action: {
@@ -60,9 +60,9 @@ struct FlashcardView: View {
                         .foregroundColor(.white)
                         .cornerRadius(8)
                 }
-
+                
                 Spacer()
-
+                
                 Button(action: {
                     viewModel.nextFlashcard()
                 }) {
@@ -75,7 +75,7 @@ struct FlashcardView: View {
                 }
             }
             .padding()
-
+            
             // Completion Toggle Button
             Button(action: {
                 if let topic = topicViewModel.topics.first(where: { $0.id == topicID }) {

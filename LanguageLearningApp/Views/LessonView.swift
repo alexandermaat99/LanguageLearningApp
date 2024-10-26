@@ -3,7 +3,7 @@ import SwiftUI
 struct LessonView: View {
     @EnvironmentObject var topicViewModel: TopicViewModel
     let topicID: UUID  // Pass topic ID instead of the entire Topic
-
+    
     var body: some View {
         // Retrieve the topic directly from the ViewModel using topicID
         if let topic = topicViewModel.topics.first(where: { $0.id == topicID }) {
@@ -11,22 +11,22 @@ struct LessonView: View {
                 VStack {
                     Text(topic.lesson)
                         .padding()
-
+                    
                     VocabularyView(vocabList: topic.flashcards.map { ($0.word, $0.translation) })
                         .padding()
-
+                    
                     Text(topic.isFlashcardsCompleted ? "Flashcards: Complete" : "Flashcards: Incomplete")
                         .font(.headline)
                         .padding(.top, 10)
-
+                    
                     Text(topic.isQuizCompleted ? "Quiz: Complete" : "Quiz: Incomplete")
                         .font(.headline)
                         .padding(.top, 5)
-
+                    
                     Text("High Score: \(topic.highScore)") // Display high score
                         .font(.headline)
                         .padding(.top, 10)
-
+                    
                     NavigationLink(destination: FlashcardView(
                         viewModel: FlashcardViewModel(flashcards: topic.flashcards),
                         topicID: topic.id  // Pass only the topic ID to FlashcardView
@@ -38,9 +38,9 @@ struct LessonView: View {
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
-
+                    
                     Spacer()
-
+                    
                     NavigationLink(destination: QuizView(
                         viewModel: QuizViewModel(
                             quiz: topic.quiz,
@@ -57,7 +57,7 @@ struct LessonView: View {
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
-
+                    
                     if topic.isQuizCompleted {
                         Button(action: {
                             topicViewModel.unmarkQuizComplete(for: topicID)
@@ -94,10 +94,10 @@ struct LessonView_Previews: PreviewProvider {
                 QuizQuestion(question: "How do you say 'apple' in Spanish?", correctAnswer: "manzana", options: ["manzana", "pera", "naranja"])
             ])
         )
-
+        
         let topicViewModel = TopicViewModel()
         topicViewModel.topics = [sampleTopic]
-
+        
         return LessonView(topicID: sampleTopic.id)
             .environmentObject(topicViewModel)
     }

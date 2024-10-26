@@ -12,7 +12,7 @@ struct QuizView: View {
     @EnvironmentObject var topicViewModel: TopicViewModel
     @Environment(\.dismiss) var dismiss
     var topicID: UUID
-
+    
     var body: some View {
         VStack {
             if viewModel.quizCompleted {
@@ -28,11 +28,11 @@ struct QuizView: View {
                     .font(.title)
                 
                 // Use onAppear to check and update high score
-                .onAppear {
-                    if viewModel.currentScore > topicViewModel.fetchTopic(by: topicID)?.highScore ?? 0 {
-                        topicViewModel.updateHighScore(for: topicID, newScore: viewModel.currentScore)
+                    .onAppear {
+                        if viewModel.currentScore > topicViewModel.fetchTopic(by: topicID)?.highScore ?? 0 {
+                            topicViewModel.updateHighScore(for: topicID, newScore: viewModel.currentScore)
+                        }
                     }
-                }
                 
                 // Button to retake the quiz
                 Button(action: {
@@ -91,17 +91,17 @@ struct QuizView: View {
                             .frame(maxWidth: .infinity)
                             .background(
                                 viewModel.selectedAnswer == option
-                                    ? (viewModel.isCorrect ? Color.green : Color.red)
-                                    : Color.gray
+                                ? (viewModel.isCorrect ? Color.green : Color.red)
+                                : Color.gray
                             )
                             .foregroundColor(.white)
                             .overlay(
                                 viewModel.selectedAnswer != nil &&
                                 viewModel.selectedAnswer != viewModel.quiz.questions[viewModel.currentIndex].correctAnswer &&
                                 option == viewModel.quiz.questions[viewModel.currentIndex].correctAnswer
-                                    ? RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.green, lineWidth: 10)
-                                    : nil
+                                ? RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.green, lineWidth: 10)
+                                : nil
                             )
                             .cornerRadius(10)
                     }

@@ -18,11 +18,11 @@ class QuizViewModel: ObservableObject {
     @Published var addedScore: Int = 0
     @Published var correctCounter: Int = 0
     @Published var incorrectCounter: Int = 0
-
+    
     private var timer: Timer?  // Timer for tracking elapsed time
     private var updateHighScore: ((Int) -> Void)?  // Callback to update high score
     private var soundPlayer = SoundPlayer()
-
+    
     init(quiz: Quiz, updateHighScore: ((Int) -> Void)? = nil) {
         self.quiz = quiz
         self.updateHighScore = updateHighScore
@@ -44,13 +44,13 @@ class QuizViewModel: ObservableObject {
     }
     
     // MARK: Answering Functionality
-
+    
     func submitAnswer(_ answer: String) {
         guard !quizCompleted else { return }
-
+        
         selectedAnswer = answer
         stopTimer()
-
+        
         if quiz.questions[currentIndex].correctAnswer == answer {
             isCorrect = true
             correctCounter += 1
@@ -65,43 +65,43 @@ class QuizViewModel: ObservableObject {
             incorrectCounter += 1
             Task { await soundPlayer.playSound(named: "Click2.m4a") }
         }
-
+        
         withAnimation { showAnswerFeedback = true }
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
             self.showAnswerFeedback = false
             self.selectedAnswer = nil
             self.isCorrect = false
             self.addedScore = 0
-
+            
             // Check if this was the last question
             if self.currentIndex == self.quiz.questions.count - 1 {
                 self.quizCompleted = true
-//                if let updateHighScore = self.updateHighScore, self.currentScore > 0 {
-//                    updateHighScore(self.currentScore)
-//                }
+                //                if let updateHighScore = self.updateHighScore, self.currentScore > 0 {
+                //                    updateHighScore(self.currentScore)
+                //                }
             } else {
                 self.currentIndex += 1
                 self.startTimer()
             }
         }
     }
-
+    
     
     // MARK: Question Advance Functionality
-
+    
     func nextQuestion() {
         showAnswerFeedback = false
         selectedAnswer = nil
         isCorrect = false
-
+        
         currentIndex += 1
         startTimer()
     }
-
-
-
-
+    
+    
+    
+    
     // MARK: Reset Quiz Functionality
     
     func resetQuiz() {

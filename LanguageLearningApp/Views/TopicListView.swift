@@ -8,7 +8,7 @@ import SwiftUI
 
 struct TopicListView: View {
     @EnvironmentObject var viewModel: TopicViewModel
-
+    
     var body: some View {
         NavigationStack {
             List {

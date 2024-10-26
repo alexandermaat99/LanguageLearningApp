@@ -22,7 +22,7 @@ struct Topic: Identifiable {
     var isFlashcardsCompleted: Bool = false
     var isQuizCompleted: Bool = false
     var highScore: Int = 0
-
+    
     mutating func markFlashcardsComplete() {
         isFlashcardsCompleted = true
     }
