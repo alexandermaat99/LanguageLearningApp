@@ -7,37 +7,56 @@
 
 import SwiftUI
 
-//pulls in data from wherever, in this case it will be used with TopicViewModel and structures is into a list + stles it
-
-// VocabularyView is a SwiftUI view that displays a list of vocabulary words and their translations.
 struct VocabularyView: View {
-    // This property holds the list of vocabulary words and their translations.
-    // It's expected to be provided by the parent view when VocabularyView is initialized.
     var vocabList: [(word: String, translation: String)]
     
     var body: some View {
         VStack(alignment: .leading) {
-            // This text serves as a header for the vocabulary list.
-            Text("Vocabulary List")
-                .font(.headline)
-                .padding(.bottom, 5)
+
+            HStack {
+                Text("English")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+                
+                Spacer()
+                
+                Text("Spanish")
+                    .font(.headline)
+                    .foregroundColor(.primary)
+            }
+            .padding(.bottom, 5)
             
-            // ForEach is used to iterate over each item in vocabList.
-            // Each item is a tuple containing a word and its translation.
             ForEach(vocabList, id: \.word) { vocab in
                 HStack {
-                    // Display the word from the tuple.
                     Text(vocab.word)
                         .font(.body)
+                    
                     Spacer()
-                    // Display the translation from the tuple, styled in gray.
+                    
                     Text(vocab.translation)
                         .font(.body)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.green)
                 }
-                .padding(.vertical, 2) // Add vertical padding between items.
+                .padding(.vertical, 2)
             }
         }
-        .padding() // Add padding around the entire VStack.
+        .padding()
+    }
+}
+
+struct VocabularyView_Previews: PreviewProvider {
+    static var previews: some View {
+        VocabularyView(vocabList: [
+            (word: "One", translation: "Uno"),
+            (word: "Two", translation: "Dos"),
+            (word: "Three", translation: "Tres"),
+            (word: "Four", translation: "Cuatro"),
+            (word: "Five", translation: "Cinco"),
+            (word: "Six", translation: "Seis"),
+            (word: "Seven", translation: "Siete"),
+            (word: "Eight", translation: "Ocho"),
+            (word: "Nine", translation: "Nueve"),
+            (word: "Ten", translation: "Diez")
+        ])
     }
 }

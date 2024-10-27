@@ -12,118 +12,170 @@ struct QuizView: View {
     @EnvironmentObject var topicViewModel: TopicViewModel
     @Environment(\.dismiss) var dismiss
     var topicID: UUID
-    
+    var topicName: String
+
+    @State private var bonusPointsScale: CGFloat = 1.0
+    @State private var highScoreUpdated = false
+
     var body: some View {
-        VStack {
-            if viewModel.quizCompleted {
-                Text("Quiz Completed!")
-                    .font(.largeTitle)
-                    .padding()
-                
-                Text("\(viewModel.correctCounter) of \(viewModel.quiz.questions.count) questions correct.")
-                    .padding()
+        ZStack {
+            Color(.systemGroupedBackground).edgesIgnoringSafeArea(.all)
+            
+            VStack(spacing: 20) {
+                if viewModel.quizCompleted {
+                    quizCompletedView
+                } else {
+                    quizInProgressView
+                }
+            }
+            .padding()
+        }
+        .navigationTitle("\(topicName) Quiz")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+    
+    private var quizCompletedView: some View {
+        VStack(spacing: 30) {
+            Text("Quiz Completed!")
+                .font(.system(size: 36, weight: .bold, design: .rounded))
+                .foregroundColor(.primary)
+            
+            VStack(spacing: 10) {
+                Text("\(viewModel.correctCounter) of \(viewModel.quiz.questions.count) questions correct")
                     .font(.headline)
+                    .foregroundColor(.secondary)
                 
                 Text("Final Score: \(viewModel.currentScore)")
-                    .font(.title)
-                
-                // Use onAppear to check and update high score
-                    .onAppear {
-                        if viewModel.currentScore > topicViewModel.fetchTopic(by: topicID)?.highScore ?? 0 {
-                            topicViewModel.updateHighScore(for: topicID, newScore: viewModel.currentScore)
-                        }
-                    }
-                
-                // Button to retake the quiz
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundColor(.primary)
+            }
+            .padding()
+            .background(Color(.systemBackground))
+            .cornerRadius(15)
+            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+            
+            Button(action: {
+                viewModel.resetQuiz()
+                topicViewModel.unmarkQuizComplete(for: topicID)
+                highScoreUpdated = false
+            }) {
+                Text("Take Quiz Again")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .cornerRadius(10)
+            }
+            
+            if viewModel.correctCounter == viewModel.quiz.questions.count {
                 Button(action: {
-                    viewModel.resetQuiz()
-                    topicViewModel.unmarkQuizComplete(for: topicID) // Unmark quiz complete if retaking
+                    topicViewModel.markQuizComplete(for: topicID)
+                    dismiss()
                 }) {
-                    Text("Take Quiz Again")
-                        .font(.title)
-                        .padding()
-                        .background(Color.blue)
+                    Text("Mark Quiz as Complete")
+                        .font(.headline)
                         .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.green)
                         .cornerRadius(10)
                 }
-                
-                // Conditionally show "Mark Quiz as Complete" if all answers are correct
-                if viewModel.correctCounter == viewModel.quiz.questions.count {
-                    Button(action: {
-                        topicViewModel.markQuizComplete(for: topicID)
-                        dismiss() // Dismiss the QuizView to go back to LessonView
-                    }) {
-                        Text("Mark Quiz as Complete")
-                            .font(.title2)
-                            .padding()
-                            .background(Color.green)
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                    }
-                    .padding(.top, 10)
-                }
+            }
+        }
+        .task {
+            if !highScoreUpdated, viewModel.currentScore > topicViewModel.fetchTopic(by: topicID)?.highScore ?? 0 {
+                topicViewModel.updateHighScore(for: topicID, newScore: viewModel.currentScore)
+                highScoreUpdated = true
+            }
+        }
+    }
+    
+    private var quizInProgressView: some View {
+        VStack(spacing: 20) {
+            Text(viewModel.quiz.questions[viewModel.currentIndex].question)
+                .font(.system(size: 24, weight: .semibold, design: .rounded))
+                .multilineTextAlignment(.center)
+                .padding()
+                .background(Color(.systemBackground))
+                .cornerRadius(15)
+                .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
+            
+            if viewModel.showAnswerFeedback {
+                Text(viewModel.isCorrect ? "Correct! + \(viewModel.addedScore)" : "Incorrect")
+                    .font(.headline)
+                    .foregroundColor(viewModel.isCorrect ? .green : .red)
+                    .scaleEffect(bonusPointsScale)
+                    .animation(.spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.5), value: bonusPointsScale)
+                    .onAppear { bonusPointsScale = 1.5 }
+                    .onDisappear { bonusPointsScale = 1.0 }
             } else {
-                Text(viewModel.quiz.questions[viewModel.currentIndex].question)
-                    .font(.title)
-                    .padding()
-                
-                if viewModel.showAnswerFeedback {
-                    Text(viewModel.isCorrect ? "Correct! + \(viewModel.addedScore)" : "Incorrect")
-                        .font(.headline)
-                        .foregroundColor(viewModel.isCorrect ? .green : .red)
-                        .transition(.opacity)
-                        .padding()
-                } else {
-                    Text(" ")
-                        .font(.headline)
-                        .padding()
-                        .opacity(0) // Invisible placeholder
-                }
-                
-                // Display answer options
+                Color.clear.frame(height: 20)
+            }
+            
+            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                 ForEach(viewModel.quiz.questions[viewModel.currentIndex].options, id: \.self) { option in
                     Button(action: {
                         viewModel.submitAnswer(option)
                     }) {
                         Text(option)
-                            .font(.title2)
+                            .font(.headline)
+                            .foregroundColor(.white)
                             .padding()
-                            .frame(maxWidth: .infinity)
+                            .frame(maxWidth: .infinity, minHeight: 44)
                             .background(
                                 viewModel.selectedAnswer == option
                                 ? (viewModel.isCorrect ? Color.green : Color.red)
-                                : Color.gray
+                                : Color.blue
                             )
-                            .foregroundColor(.white)
+                            .cornerRadius(10)
                             .overlay(
                                 viewModel.selectedAnswer != nil &&
                                 viewModel.selectedAnswer != viewModel.quiz.questions[viewModel.currentIndex].correctAnswer &&
                                 option == viewModel.quiz.questions[viewModel.currentIndex].correctAnswer
                                 ? RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.green, lineWidth: 10)
+                                    .stroke(Color.green, lineWidth: 8)
                                 : nil
                             )
-                            .cornerRadius(10)
                     }
-                    .padding(.bottom, 5)
-                    .animation(.easeInOut(duration: 0.5), value: viewModel.selectedAnswer)
+                    .disabled(viewModel.selectedAnswer != nil)
+                    .animation(.easeInOut(duration: 0.3), value: viewModel.selectedAnswer)
                 }
-                
-                ProgressView("Time Bonus", value: min(viewModel.elapsedTime, 20.0), total: 20.0)
-                    .progressViewStyle(LinearProgressViewStyle(tint: Color.blue))
-                    .padding()
-                
-                Text("Current Score: \(viewModel.currentScore)")
-                    .font(.title2)
-                    .padding(.top, 20)
             }
             
-            Spacer()
+            VStack(spacing: 5) {
+                ProgressView("Time Bonus", value: min(viewModel.elapsedTime, 20.0), total: 20.0)
+                    .progressViewStyle(LinearProgressViewStyle(tint: Color.blue))
+                
+                Text("Current Score: \(viewModel.currentScore)")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+                
+                Text("Question \(viewModel.currentIndex + 1) of \(viewModel.quiz.questions.count)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            .padding()
+            .background(Color(.systemBackground))
+            .cornerRadius(15)
+            .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
         }
-        .padding()
-        .navigationTitle("Quiz")
     }
 }
 
-
-
+struct QuizView_Previews: PreviewProvider {
+    static var previews: some View {
+        let sampleQuiz = Quiz(questions: [
+            QuizQuestion(question: "What is the capital of France?", correctAnswer: "Paris", options: ["London", "Berlin", "Paris", "Madrid"]),
+            QuizQuestion(question: "Which planet is known as the Red Planet?", correctAnswer: "Mars", options: ["Venus", "Mars", "Jupiter", "Saturn"])
+        ])
+        
+        let viewModel = QuizViewModel(quiz: sampleQuiz) { _ in }
+        let topicViewModel = TopicViewModel()
+        
+        NavigationView {
+            QuizView(viewModel: viewModel, topicID: UUID(), topicName: "Sample Topic")
+                .environmentObject(topicViewModel)
+        }
+    }
+}

@@ -59,11 +59,11 @@ class QuizViewModel: ObservableObject {
             let bonus = max(0, Int((20 - elapsedTime) / 2))
             addedScore += bonus
             currentScore += bonus
-            Task { await soundPlayer.playSound(named: "Click.m4a") }
+            Task { await soundPlayer.playSound(named: "right.m4a") }
         } else {
             isCorrect = false
             incorrectCounter += 1
-            Task { await soundPlayer.playSound(named: "Click2.m4a") }
+            Task { await soundPlayer.playSound(named: "wrong.m4a") }
         }
         
         withAnimation { showAnswerFeedback = true }
