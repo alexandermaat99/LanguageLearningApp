@@ -30,13 +30,13 @@ class TopicViewModel: ObservableObject {
                     Flashcard(word: "Excuse me", translation: "Siento molestar")
                 ],
                 quiz: Quiz(questions: [
-                    QuizQuestion(question: "How do you say 'Hello' in Spanish?", correctAnswer: "Hola", options: ["Hola", "Adiós", "Gracias", "Buenos días"]),
-                    QuizQuestion(question: "How do you say 'Goodbye' in Spanish?", correctAnswer: "Adiós", options: ["Adiós", "Hola", "Buenas noches", "Gracias"]),
-                    QuizQuestion(question: "How do you say 'Good morning' in Spanish?", correctAnswer: "Buenos días", options: ["Buenos días", "Buenas noches", "Adiós", "Hola"]),
-                    QuizQuestion(question: "How do you say 'Good night' in Spanish?", correctAnswer: "Buenas noches", options: ["Buenas noches", "Gracias", "Buenos días", "Siento molestar"]),
-                    QuizQuestion(question: "How do you say 'Thank you' in Spanish?", correctAnswer: "Gracias", options: ["Gracias", "Hola", "Adiós", "Siento molestar"]),
-                    QuizQuestion(question: "How do you say 'Excuse me' in Spanish?", correctAnswer: "Siento molestar", options: ["Siento molestar", "Gracias", "Buenos días", "Buenas noches"]),
-                    QuizQuestion(question: "How do you say 'Please' in Spanish?", correctAnswer: "Por favor", options: ["Por favor", "Gracias", "Adiós", "Hola"])
+                    QuizQuestion(question: "How do you say 'Hello' in Spanish?", correctAnswer: "Hola", options: ["Adiós", "Hola", "Gracias", "Buenos días"]),
+                    QuizQuestion(question: "How do you say 'Goodbye' in Spanish?", correctAnswer: "Adiós", options: ["Hola", "Buenas noches", "Adiós", "Gracias"]),
+                    QuizQuestion(question: "How do you say 'Good morning' in Spanish?", correctAnswer: "Buenos días", options: ["Buenas noches", "Adiós", "Hola", "Buenos días"]),
+                    QuizQuestion(question: "How do you say 'Good night' in Spanish?", correctAnswer: "Buenas noches", options: ["Gracias", "Buenas noches", "Buenos días", "Siento molestar"]),
+                    QuizQuestion(question: "How do you say 'Thank you' in Spanish?", correctAnswer: "Gracias", options: ["Hola", "Adiós", "Gracias", "Siento molestar"]),
+                    QuizQuestion(question: "How do you say 'Excuse me' in Spanish?", correctAnswer: "Siento molestar", options: ["Gracias", "Siento molestar", "Buenos días", "Buenas noches"]),
+                    QuizQuestion(question: "How do you say 'Please' in Spanish?", correctAnswer: "Por favor", options: ["Gracias", "Adiós", "Por favor", "Hola"])
                 ])
             ),
             Topic(
@@ -57,13 +57,13 @@ class TopicViewModel: ObservableObject {
                     Flashcard(word: "Ten", translation: "Diez")
                 ],
                 quiz: Quiz(questions: [
-                    QuizQuestion(question: "How do you say 'Two' in Spanish?", correctAnswer: "Dos", options: ["Dos", "Uno", "Tres", "Cuatro"]),
-                    QuizQuestion(question: "How do you say 'Three' in Spanish?", correctAnswer: "Tres", options: ["Tres", "Cuatro", "Dos", "Cinco"]),
-                    QuizQuestion(question: "How do you say 'Four' in Spanish?", correctAnswer: "Cuatro", options: ["Cuatro", "Tres", "Cinco", "Seis"]),
-                    QuizQuestion(question: "How do you say 'Five' in Spanish?", correctAnswer: "Cinco", options: ["Cinco", "Cuatro", "Seis", "Siete"]),
-                    QuizQuestion(question: "How do you say 'Six' in Spanish?", correctAnswer: "Seis", options: ["Seis", "Cinco", "Siete", "Ocho"]),
-                    QuizQuestion(question: "How do you say 'Seven' in Spanish?", correctAnswer: "Siete", options: ["Siete", "Ocho", "Seis", "Nueve"]),
-                    QuizQuestion(question: "How do you say 'Ten' in Spanish?", correctAnswer: "Diez", options: ["Diez", "Nueve", "Ocho", "Siete"])
+                    QuizQuestion(question: "How do you say 'Two' in Spanish?", correctAnswer: "Dos", options: ["Uno", "Tres", "Dos", "Cuatro"]),
+                    QuizQuestion(question: "How do you say 'Three' in Spanish?", correctAnswer: "Tres", options: ["Cuatro", "Tres", "Dos", "Cinco"]),
+                    QuizQuestion(question: "How do you say 'Four' in Spanish?", correctAnswer: "Cuatro", options: ["Tres", "Cinco", "Cuatro", "Seis"]),
+                    QuizQuestion(question: "How do you say 'Five' in Spanish?", correctAnswer: "Cinco", options: ["Cuatro", "Cinco", "Seis", "Siete"]),
+                    QuizQuestion(question: "How do you say 'Six' in Spanish?", correctAnswer: "Seis", options: ["Cinco", "Siete", "Seis", "Ocho"]),
+                    QuizQuestion(question: "How do you say 'Seven' in Spanish?", correctAnswer: "Siete", options: ["Ocho", "Siete", "Seis", "Nueve"]),
+                    QuizQuestion(question: "How do you say 'Ten' in Spanish?", correctAnswer: "Diez", options: ["Nueve", "Ocho", "Diez", "Siete"])
                 ])
             ),
             Topic(
@@ -79,13 +79,13 @@ class TopicViewModel: ObservableObject {
                     Flashcard(word: "Black", translation: "Negro")
                 ],
                 quiz: Quiz(questions: [
-                    QuizQuestion(question: "How do you say 'Blue' in Spanish?", correctAnswer: "Azul", options: ["Azul", "Rojo", "Verde", "Amarillo"]),
-                    QuizQuestion(question: "How do you say 'Red' in Spanish?", correctAnswer: "Rojo", options: ["Rojo", "Azul", "Negro", "Amarillo"]),
-                    QuizQuestion(question: "How do you say 'Green' in Spanish?", correctAnswer: "Verde", options: ["Verde", "Azul", "Rojo", "Amarillo"]),
-                    QuizQuestion(question: "How do you say 'Yellow' in Spanish?", correctAnswer: "Amarillo", options: ["Amarillo", "Verde", "Azul", "Rojo"]),
-                    QuizQuestion(question: "How do you say 'Black' in Spanish?", correctAnswer: "Negro", options: ["Negro", "Azul", "Rojo", "Verde"]),
-                    QuizQuestion(question: "How do you say 'White' in Spanish?", correctAnswer: "Blanco", options: ["Blanco", "Negro", "Azul", "Rojo"]),
-                    QuizQuestion(question: "How do you say 'Purple' in Spanish?", correctAnswer: "Morado", options: ["Morado", "Azul", "Amarillo", "Rojo"])
+                    QuizQuestion(question: "How do you say 'Blue' in Spanish?", correctAnswer: "Azul", options: ["Rojo", "Verde", "Azul", "Amarillo"]),
+                    QuizQuestion(question: "How do you say 'Red' in Spanish?", correctAnswer: "Rojo", options: ["Azul", "Rojo", "Negro", "Amarillo"]),
+                    QuizQuestion(question: "How do you say 'Green' in Spanish?", correctAnswer: "Verde", options: ["Azul", "Verde", "Rojo", "Amarillo"]),
+                    QuizQuestion(question: "How do you say 'Yellow' in Spanish?", correctAnswer: "Amarillo", options: ["Verde", "Azul", "Amarillo", "Rojo"]),
+                    QuizQuestion(question: "How do you say 'Black' in Spanish?", correctAnswer: "Negro", options: ["Azul", "Negro", "Rojo", "Verde"]),
+                    QuizQuestion(question: "How do you say 'White' in Spanish?", correctAnswer: "Blanco", options: ["Negro", "Blanco", "Azul", "Rojo"]),
+                    QuizQuestion(question: "How do you say 'Purple' in Spanish?", correctAnswer: "Morado", options: ["Azul", "Amarillo", "Morado", "Rojo"])
                 ])
             ),
             Topic(
@@ -100,13 +100,13 @@ class TopicViewModel: ObservableObject {
                     Flashcard(word: "Sister", translation: "Hermana")
                 ],
                 quiz: Quiz(questions: [
-                    QuizQuestion(question: "How do you say 'Father' in Spanish?", correctAnswer: "Padre", options: ["Padre", "Madre", "Hermano", "Hermana"]),
-                    QuizQuestion(question: "How do you say 'Mother' in Spanish?", correctAnswer: "Madre", options: ["Madre", "Padre", "Hermano", "Hermana"]),
-                    QuizQuestion(question: "How do you say 'Brother' in Spanish?", correctAnswer: "Hermano", options: ["Hermano", "Padre", "Madre", "Hermana"]),
-                    QuizQuestion(question: "How do you say 'Sister' in Spanish?", correctAnswer: "Hermana", options: ["Hermana", "Padre", "Madre", "Hermano"]),
-                    QuizQuestion(question: "How do you say 'Grandfather' in Spanish?", correctAnswer: "Abuelo", options: ["Abuelo", "Hermana", "Padre", "Madre"]),
-                    QuizQuestion(question: "How do you say 'Grandmother' in Spanish?", correctAnswer: "Abuela", options: ["Abuela", "Padre", "Madre", "Hermano"]),
-                    QuizQuestion(question: "How do you say 'Uncle' in Spanish?", correctAnswer: "Tío", options: ["Tío", "Hermana", "Madre", "Padre"])
+                    QuizQuestion(question: "How do you say 'Father' in Spanish?", correctAnswer: "Padre", options: ["Madre", "Hermano", "Padre", "Hermana"]),
+                    QuizQuestion(question: "How do you say 'Mother' in Spanish?", correctAnswer: "Madre", options: ["Padre", "Madre", "Hermano", "Hermana"]),
+                    QuizQuestion(question: "How do you say 'Brother' in Spanish?", correctAnswer: "Hermano", options: ["Padre", "Madre", "Hermana", "Hermano"]),
+                    QuizQuestion(question: "How do you say 'Sister' in Spanish?", correctAnswer: "Hermana", options: ["Padre", "Hermana", "Madre", "Hermano"]),
+                    QuizQuestion(question: "How do you say 'Grandfather' in Spanish?", correctAnswer: "Abuelo", options: ["Hermana", "Abuelo", "Padre", "Madre"]),
+                    QuizQuestion(question: "How do you say 'Grandmother' in Spanish?", correctAnswer: "Abuela", options: ["Padre", "Madre", "Abuela", "Hermano"]),
+                    QuizQuestion(question: "How do you say 'Uncle' in Spanish?", correctAnswer: "Tío", options: ["Hermana", "Madre", "Tío", "Padre"])
                 ])
             ),
             Topic(
@@ -122,13 +122,13 @@ class TopicViewModel: ObservableObject {
                     Flashcard(word: "Friday", translation: "Viernes")
                 ],
                 quiz: Quiz(questions: [
-                    QuizQuestion(question: "How do you say 'Monday' in Spanish?", correctAnswer: "Lunes", options: ["Lunes", "Martes", "Miércoles", "Viernes"]),
-                    QuizQuestion(question: "How do you say 'Tuesday' in Spanish?", correctAnswer: "Martes", options: ["Martes", "Lunes", "Miércoles", "Viernes"]),
-//                    QuizQuestion(question: "How do you say 'Wednesday' in Spanish?", correctAnswer: "Miércoles", options: ["Miércoles", "Martes", "Jueves", "Viernes"]),
-//                    QuizQuestion(question: "How do you say 'Thursday' in Spanish?", correctAnswer: "Jueves", options: ["Jueves", "Lunes", "Martes", "Viernes"]),
-//                    QuizQuestion(question: "How do you say 'Friday' in Spanish?", correctAnswer: "Viernes", options: ["Viernes", "Lunes", "Martes", "Jueves"]),
-//                    QuizQuestion(question: "How do you say 'Saturday' in Spanish?", correctAnswer: "Sábado", options: ["Sábado", "Domingo", "Lunes", "Viernes"]),
-//                    QuizQuestion(question: "How do you say 'Sunday' in Spanish?", correctAnswer: "Domingo", options: ["Domingo", "Lunes", "Sábado", "Viernes"])
+                    QuizQuestion(question: "How do you say 'Monday' in Spanish?", correctAnswer: "Lunes", options: ["Martes", "Miércoles", "Lunes", "Viernes"]),
+                    QuizQuestion(question: "How do you say 'Tuesday' in Spanish?", correctAnswer: "Martes", options: ["Lunes", "Martes", "Miércoles", "Viernes"]),
+                    QuizQuestion(question: "How do you say 'Wednesday' in Spanish?", correctAnswer: "Miércoles", options: ["Martes", "Jueves", "Viernes", "Miércoles"]),
+                    QuizQuestion(question: "How do you say 'Thursday' in Spanish?", correctAnswer: "Jueves", options: ["Lunes", "Jueves", "Martes", "Viernes"]),
+                    QuizQuestion(question: "How do you say 'Friday' in Spanish?", correctAnswer: "Viernes", options: ["Lunes", "Martes", "Viernes", "Jueves"]),
+                    QuizQuestion(question: "How do you say 'Saturday' in Spanish?", correctAnswer: "Sábado", options: ["Domingo", "Lunes", "Sábado", "Viernes"]),
+                    QuizQuestion(question: "How do you say 'Sunday' in Spanish?", correctAnswer: "Domingo", options: ["Lunes", "Domingo", "Sábado", "Viernes"])
                 ])
             )
         ]
